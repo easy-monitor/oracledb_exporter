@@ -12,9 +12,6 @@ source=()
 
 _goversion=1.14.2
 
-prepare() {
-}
-
 build() {
     mkdir $startdir/bin
     make download-rpms
