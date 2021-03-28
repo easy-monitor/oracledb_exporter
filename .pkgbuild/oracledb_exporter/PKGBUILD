@@ -14,6 +14,8 @@ _goversion=1.14.2
 
 build() {
     mkdir $startdir/bin
+    cd $startdir
+    ls -l
     make download-rpms
     make linux
     mv oracledb_exporter $startdir/bin/
