@@ -14,7 +14,7 @@ _goversion=1.14.2
 
 build() {
     mkdir $startdir/bin
-    cd $startdir
+    cd $pkgdir
     ls -l
     make download-rpms
     make linux
