@@ -10,6 +10,9 @@ arch=('x86_64')
 options=('!strip')
 source=()
 
+prepare() {
+    export _projdir=$(readlink -f "$startdir/../..")
+}
 
 package() {
     install -d "$pkgdir/bin"
