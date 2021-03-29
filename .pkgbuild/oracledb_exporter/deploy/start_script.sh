@@ -32,6 +32,9 @@ if [[ ! -f ${config_path} ]]; then
     config_path="$install_path/conf/default-metrics.toml"
 fi
 
+# 连接oracle依赖的sdk
+export LD_LIBRARY_PATH=$install_path/src/oracle_instantclient_basiclite:$LD_LIBRARY_PATH
+
 # 启动命令
 start_cmd="./bin/oracledb_exporter --web.listen-address=0.0.0.0:9161 --default.metrics $config_path >/dev/null 2>log/${app_folder}.log &"
 
