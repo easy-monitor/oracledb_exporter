@@ -30,10 +30,10 @@ fi
 default_metric_path="$install_path/conf/default-metrics.toml"
 
 # 自定义指标
-custom_path="$install_path/conf/custom-metrics.toml"
+custom_metric_path="$install_path/conf/custom-metrics.toml"
 custom_metric_flag=""
-if [[ ! -f ${config_path} ]]; then
-    custom_metric_flag="--custom.metrics $custom_path"
+if [[ -f ${custom_metric_path} ]]; then
+    custom_metric_flag="--custom.metrics custom_metric_path"
 fi
 
 # 连接oracle依赖的sdk
