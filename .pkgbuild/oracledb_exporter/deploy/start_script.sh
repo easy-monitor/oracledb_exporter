@@ -20,15 +20,20 @@ ulimit -n 100000
 export LD_LIBRARY_PATH=/usr/local/easyops/ens_client/sdk:${LD_LIBRARY_PATH}
 
 # 执行准备
-install_path="${install_base}/${app_folder}/"
+install_path="${install_base}/${app_folder}"
 if [[ ! -d ${install_path} ]]; then
     echo "${install_path} is not exist"
     exit 1
 fi
 
+# 配置文件
+config_path="$install_path/conf/metrics.toml"
+if [[ ! -f ${config_path} ]]; then
+    config_path="$install_path/conf/default-metrics.toml"
+fi
 
 # 启动命令
-start_cmd="./bin/oracledb_exporter --web.listen-address=0.0.0.0:9161 >/dev/null 2>log/${app_folder}.log &"
+start_cmd="./bin/oracledb_exporter --web.listen-address=0.0.0.0:9161 --default.metrics $config_path >/dev/null 2>log/${app_folder}.log &"
 
 
 # 日志目录

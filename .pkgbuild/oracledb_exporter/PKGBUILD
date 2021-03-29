@@ -10,17 +10,6 @@ arch=('x86_64')
 options=('!strip')
 source=()
 
-_goversion=1.14.2
-
-build() {
-    mkdir $startdir/bin
-    cd $pkgdir
-    ls -l
-    make download-rpms
-    make linux
-    mv oracledb_exporter $startdir/bin/
-    ls -l $startdir/bin
-}
 
 package() {
     install -d "$pkgdir/bin"
@@ -28,5 +17,4 @@ package() {
 
     install -d "$pkgdir/deploy"
     install -m755 "$startdir/deploy/"* "$pkgdir/deploy"
-
 }

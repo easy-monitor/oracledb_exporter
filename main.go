@@ -547,8 +547,12 @@ func main() {
 	hashMap = make(map[int][]byte)
 	reloadMetrics()
 
-	exporter := NewExporter(dsn)
-	prometheus.MustRegister(exporter)
+	if dsn != "" {
+		exporter := NewExporter(dsn)
+		prometheus.MustRegister(exporter)
+	} else {
+		http.HandleFunc("/scrape", scrapeHandle())
+	}
 
 	// See more info on https://github.com/prometheus/client_golang/blob/master/prometheus/promhttp/http.go#L269
 	opts := promhttp.HandlerOpts{
@@ -556,7 +560,6 @@ func main() {
 		ErrorHandling: promhttp.ContinueOnError,
 	}
 	http.Handle(*metricPath, promhttp.HandlerFor(prometheus.DefaultGatherer, opts))
-	http.HandleFunc("/scrape", scrapeHandle())
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("<html><head><title>Oracle DB Exporter " + Version + "</title></head><body><h1>Oracle DB Exporter " + Version + "</h1><p><a href='" + *metricPath + "'>Metrics</a></p></body></html>"))
