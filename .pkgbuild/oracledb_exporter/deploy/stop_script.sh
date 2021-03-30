@@ -6,7 +6,7 @@
 
 #############################################################
 # 用户自定义
-process_name="kafka_exporter"       # 进程名
+process_name="oracledb_exporter"       # 进程名
 
 
 # 停止进程

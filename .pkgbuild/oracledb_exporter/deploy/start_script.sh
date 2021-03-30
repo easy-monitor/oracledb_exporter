@@ -37,7 +37,15 @@ if [[ -f ${custom_metric_path} ]]; then
 fi
 
 # 连接oracle依赖的sdk
-export LD_LIBRARY_PATH=$install_path/src/oracle_instantclient_basiclite:$LD_LIBRARY_PATH
+sdk_path=$install_path/src/oracle_instantclient_basiclite
+if [[ ! -d ${sdk_path} ]]; then
+  cd $install_path/src/
+  zip_path=$(ls ${install_path}/src/*.zip)
+  unzip ${zip_path}
+  mv $install_path/src/instantclient_18_5 $sdk_path
+fi
+
+export LD_LIBRARY_PATH=$sdk_path:$LD_LIBRARY_PATH
 
 # 启动命令
 start_cmd="./bin/oracledb_exporter --web.listen-address=0.0.0.0:9161 --default.metrics $default_metric_path $custom_metric_flag >/dev/null 2>log/${app_folder}.log &"
